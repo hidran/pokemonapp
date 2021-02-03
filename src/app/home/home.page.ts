@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PokemonApiService } from '../services/pokemon-api.service';
 
 @Component({
   selector: 'app-home',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePage implements OnInit {
 
-  constructor() { }
+  pokemons : [];
+
+  constructor( public pokService: PokemonApiService) { }
 
   ngOnInit() {
+     this.pokService.getPokemons().subscribe(res => {
+      
+      this.pokemons = res['results'];
+     });
   }
 
 }
