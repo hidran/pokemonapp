@@ -24,5 +24,11 @@
       </ion-col>
       <ion-col size="2"></ion-col>
     </ion-row>
+    <ion-row *ngIf="(pokemonData$ | async) as pData">
+      <ion-col>
+        {{pData | json}}
+      </ion-col>
+    </ion-row>
+
   </ion-grid>
 </ion-content>

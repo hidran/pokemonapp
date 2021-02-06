@@ -2,7 +2,7 @@ import { Pokemon } from '../models/Pokemon';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import { IPokemon, IResult } from '../interfaces/ipokemons';
+import { IPokemon, IPokemonData, IResult } from '../interfaces/ipokemons';
 import { switchMap, tap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -23,5 +23,10 @@ export class PokemonApiService {
        tap((res:Pokemon[]) => console.log(res))
        );
 
+  }
+
+  getPokemonData(id: number):Observable<IPokemonData>{
+    const url = environment.pokUrl + '/'+ id + '/';
+    return  this.http.get<IPokemonData>(url);
   }
 }
