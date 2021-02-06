@@ -27,6 +27,8 @@ export class PokemonApiService {
 
   getPokemonData(id: number):Observable<IPokemonData>{
     const url = environment.pokUrl + '/'+ id + '/';
-    return  this.http.get<IPokemonData>(url);
+    return  this.http.get<IPokemonData>(url).pipe(
+      tap(res => console.log(res))
+    );
   }
 }
