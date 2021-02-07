@@ -52,17 +52,33 @@ export class PokemonApiService {
     );
   }
 
-  async addPokemonToFavorite(pok: Pokemon){
+  async addPokemonToFavorite(pok: Pokemon, isFavorite: boolean){
+
      let data:Pokemon[] = await this.storage.get(POKEMON_FAVORITE) ?? [];
 
-         if(data.includes(pok)){
+         if(!isFavorite && data.some((res) => +res.id === +pok.id)){
            return;
          }
-      data.push(pok);
+      if(!isFavorite){
+        data.push(pok)
+      } else {
+        data = data.filter(res => res.id !== pok.id);
+      }
       return await this.storage.set(POKEMON_FAVORITE, data);
   }
 
    getFavoritePokemon():Observable<Pokemon[]>{
     return from(this.storage.get(POKEMON_FAVORITE));
+   }
+   async isPokemonFavorite(pok:Pokemon){
+    let data:Pokemon[] = await this.storage.get(POKEMON_FAVORITE) ?? [];
+    if(data.length === 0){
+      return false;
+    }
+    if(data.some((res) => +res.id === +pok.id)){
+      return true;
+    }
+
+    return false;
    }
 }
