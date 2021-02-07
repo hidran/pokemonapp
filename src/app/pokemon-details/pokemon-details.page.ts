@@ -15,7 +15,7 @@ export class PokemonDetailsPage implements OnInit {
 
   public pokemon: Pokemon;
   public pokemonData$: Observable<IPokemonData>;
-
+  private id: number;
   constructor(private router: ActivatedRoute,
      private  pokService: PokemonApiService,
 private loadingCtrl: LoadingController
@@ -30,10 +30,16 @@ private loadingCtrl: LoadingController
     });
      await loading.present();
     const id = +this.router.snapshot.paramMap.get('id');
+    this.id = id;
     const name = this.router.snapshot.queryParamMap.get('name');
     this.pokemon = new Pokemon({name, url:environment.pokImgUrl  + id +'/'});
     this.pokemonData$ = this.pokService.getPokemonData(id);
     this.pokemonData$.subscribe(() => loading.dismiss());
   }
+  addToFavorite(){
 
+  }
+  share(){
+
+  }
 }
