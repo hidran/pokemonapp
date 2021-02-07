@@ -8,7 +8,7 @@ import { Observable, from, merge } from 'rxjs';
 import {Storage} from '@ionic/storage';
 
 const POKEMON_KEY = 'pokemons';
-
+const POKEMON_FAVORITE = 'pokemons-favorite';
 /**
  *  -- --- --- --- --|
  *  -----------------| -------------
@@ -51,4 +51,18 @@ export class PokemonApiService {
       tap(res => console.log(res))
     );
   }
+
+  async addPokemonToFavorite(pok: Pokemon){
+     let data:Pokemon[] = await this.storage.get(POKEMON_FAVORITE) ?? [];
+
+         if(data.includes(pok)){
+           return;
+         }
+      data.push(pok);
+      return await this.storage.set(POKEMON_FAVORITE, data);
+  }
+
+   getFavoritePokemon():Observable<Pokemon[]>{
+    return from(this.storage.get(POKEMON_FAVORITE));
+   }
 }

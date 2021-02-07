@@ -7,7 +7,7 @@
 <ion-content>
 
 <ion-list button *ngIf="pokemons$ | async as pokemons">
-  <ion-item [queryParams]="{name: pok.name}" [routerLink]="['pokemon-details', pok.id]" *ngFor="let pok of pokemons" detail lines="none">
+  <ion-item [queryParams]="{name: pok.name}" [routerLink]="['/pokemons/home/pokemon-details', pok.id]" *ngFor="let pok of pokemons" detail lines="none">
     <ion-thumbnail slot="start">
     <img src="{{pok.img}}">
   </ion-thumbnail>

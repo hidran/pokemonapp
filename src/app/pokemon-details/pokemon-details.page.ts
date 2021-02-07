@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Pokemon } from '../models/Pokemon';
 import {environment} from '../../environments/environment';
 import { IPokemonData } from '../interfaces/ipokemons';
@@ -18,7 +18,8 @@ export class PokemonDetailsPage implements OnInit {
   private id: number;
   constructor(private router: ActivatedRoute,
      private  pokService: PokemonApiService,
-private loadingCtrl: LoadingController
+private loadingCtrl: LoadingController,
+  private route: Router
      ) { }
 
   async ngOnInit() {
@@ -36,7 +37,10 @@ private loadingCtrl: LoadingController
     this.pokemonData$ = this.pokService.getPokemonData(id);
     this.pokemonData$.subscribe(() => loading.dismiss());
   }
-  addToFavorite(){
+  async addToFavorite(){
+    const result = await  this.pokService.addPokemonToFavorite(this.pokemon);
+
+    this.route.navigate(['/pokemons/favorites'])
 
   }
   share(){
