@@ -10,6 +10,7 @@ import { PokemonApiService } from '../services/pokemon-api.service';
 })
 export class FavoritePage implements OnInit {
 
+  public pageTitle ='Favorite pokemons';
   pokemons$ :Observable<Pokemon[]>;
   constructor( private pokService: PokemonApiService) { }
 
