@@ -71,8 +71,18 @@ export class PokemonApiService {
     return await this.storage.set(POKEMON_FAVORITE, data);
   }
 
-  getFavoritePokemon(): Observable<Pokemon[]> {
-    return from(this.storage.get(POKEMON_FAVORITE));
+  getFavoritePokemon(pokeName: string): Observable<Pokemon[]> {
+    return from(this.storage.get(POKEMON_FAVORITE)).pipe(
+      map((res: Pokemon[]) => {
+          if (!res || !res.length) {
+            return [];
+          }
+          if (pokeName) {
+            return res.filter(pok => pok.name.startsWith(pokeName));
+          }
+          return res;
+        }
+      ));
   }
 
   async isPokemonFavorite(pok: Pokemon) {

@@ -12,7 +12,7 @@ import {LoadingController} from '@ionic/angular';
 export class HomePage implements OnInit {
 
   pokemons$: Observable<Pokemon[]>;
-
+  public pageTitle = 'POKEMONS';
   private loading: any;
 
   constructor(public pokService: PokemonApiService,

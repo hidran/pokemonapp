@@ -47,11 +47,12 @@ export class PokemonDetailsPage {
   async addToFavorite() {
     const result = await this.pokService.addPokemonToFavorite(this.pokemon, this.isFavorite);
 
-    this.route.navigate(['/pokemons/favorites']);
+    await this.route.navigate(['pokemons/favorites']);
 
   }
 
   share() {
 
   }
+
 }

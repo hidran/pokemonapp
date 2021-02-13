@@ -1,9 +1,9 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>home</ion-title>
+  <ion-toolbar class="ion-padding">
+    <ion-title>{{pageTitle | uppercase}}</ion-title>
     <ion-searchbar
       (ionChange)="filterPokemons($event)"
-      (ionClear)="clearFilter($event)"
+
       showCancelButton="focus">
 
     </ion-searchbar>
