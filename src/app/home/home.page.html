@@ -1,6 +1,6 @@
 <ion-header>
+<app-menu-toolbar pageTitle="{{isFavoritePage? 'FAVORITES':'POKEMONS'}}"></app-menu-toolbar>
   <ion-toolbar class="ion-padding">
-    <ion-title>{{pageTitle | uppercase}}</ion-title>
     <ion-searchbar
       (ionChange)="filterPokemons($event)"
 

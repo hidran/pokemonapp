@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { ContactPageRoutingModule } from './contact-routing.module';
 
 import { ContactPage } from './contact.page';
+import {MenuToolbarPageModule} from '../pages/menu-toolbar/menu-toolbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ContactPageRoutingModule
+    ContactPageRoutingModule,
+    MenuToolbarPageModule
   ],
   declarations: [ContactPage]
 })
