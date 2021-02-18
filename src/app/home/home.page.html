@@ -16,7 +16,7 @@
 
     <ion-item-sliding   *ngFor="let pok of pokemons">
       <ion-item-options side="end">
-        <ion-item-option color="{{(isFavoritePage || isPokFavorite(pok))? 'danger':'primary'}}" (click)="favorite(pok)">
+        <ion-item-option color="{{(isFavoritePage || isPokFavorite(pok))? 'danger':'primary'}}" (click)="favorite(pok, $event)">
           <ion-icon slot="icon-only" name="heart"></ion-icon>
         </ion-item-option>
         <ion-item-option color="primary" (click)="share(pok)">

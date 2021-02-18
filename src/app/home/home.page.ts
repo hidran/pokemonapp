@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {PokemonApiService} from '../services/pokemon-api.service';
 import {Pokemon} from '../models/Pokemon';
 import {Observable} from 'rxjs';
-import {LoadingController} from '@ionic/angular';
+import {IonList, LoadingController, ToastController} from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -16,9 +16,11 @@ export class HomePage implements OnInit {
   private loading: any;
   public isFavoritePage = false;
   public favorites: Pokemon[];
+  @ViewChild(IonList) pokList: IonList;
 
   constructor(public pokService: PokemonApiService,
-              private loadingCtrl: LoadingController
+              private loadingCtrl: LoadingController,
+              private toast: ToastController
   ) {
 
 
@@ -32,6 +34,17 @@ export class HomePage implements OnInit {
     this.pokemons$.subscribe(() => {
       this.loading.dismiss();
     });
+  }
+
+  async presentToast(msg: string, color: string) {
+    const toast = await this.toast.create({
+      message: msg,
+      duration: 2000,
+      position: 'middle',
+      animated : true,
+      color
+    });
+    return await toast.present();
   }
 
   public isPokFavorite(pok: Pokemon) {
@@ -53,10 +66,26 @@ export class HomePage implements OnInit {
     this.pokemons$ = this.pokService.getPokemons($event.target.value);
   }
 
-  async favorite(pok: Pokemon) {
+  async favorite(pok: Pokemon, event) {
+    const isFav = this.isPokFavorite(pok);
+    const result = await this.pokService.addPokemonToFavorite(pok, isFav);
+    this.favorites = await this.pokService.getFavoritePokemon('').toPromise();
+    let item;
+    if (event.target.nodeName.toUpperCase() === 'ION-ICON') {
+      item = event.target.parentNode;
+    } else {
+      item = event.target;
+    }
 
-    const result = await this.pokService.addPokemonToFavorite(pok, this.isPokFavorite(pok)
-    );
+
+    if (!isFav && result) {
+      item.color = 'danger';
+      await this.presentToast(pok.name + ' added to favorite!', 'danger');
+    } else {
+      item.color = 'primary';
+      await this.presentToast(pok.name + ' removed to favorite!', 'primary');
+    }
+    await this.pokList.closeSlidingItems();
   }
 
   share(pok: Pokemon) {
